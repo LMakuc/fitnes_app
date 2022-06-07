@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 
 import './Buttons.css';
 
@@ -6,13 +6,16 @@ interface Props{
     className: string;
     text: string;
     type: any;
+
+    onClick?: (e:MouseEvent) => void; 
 }
 
-function SiteButton({className, text, type}:Props){
+function ChangeSiteButton({className, text, type, onClick}:Props){
     return(
         <div>
             <button 
                 className={className}
+                onClick={onClick}
                 type={type}>
                     <b>{text}</b>
             </button>
@@ -20,4 +23,4 @@ function SiteButton({className, text, type}:Props){
     );
 }
 
-export default SiteButton;
+export default ChangeSiteButton;

@@ -12,14 +12,12 @@ interface Props{
 
 function ChangeSiteButton({className, text, type, onClick}:Props){
     return(
-        <div>
-            <button 
-                className={className}
-                onClick={onClick}
-                type={type}>
-                    <b>{text}</b>
-            </button>
-        </div>
+        <button 
+            className={className}
+            onClick={onClick}
+            type={type}>
+                <b>{text}</b>
+        </button>
     );
 }
 

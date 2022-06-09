@@ -4,24 +4,30 @@ import './App.css';
 
 import ChangeSiteButton from './Buttons/SiteButton';
 import Tracking from './Sites/Tracking/Tracking';
-import Exercises from './Sites/Exercises/Exercises';
+import ChooseMuscleGroup from './Sites/Exercises/ChooseMuscleGroup';
 import BlankSite from './Sites/BlankSite';
 
 function App() {
   
-  const [buttonStateExercises, setButtonStateExercies] = useState(true);
   const [buttonStateTracking, setButtonStateTracking] = useState(false);
   function changeSiteToTracking(){
     setButtonStateTracking(!buttonStateTracking);
+    if(buttonStateExercises){
+      changeSiteToExercises();
+    } 
   }
-  function changeSiteToExerises(){
+  const [buttonStateExercises, setButtonStateExercies] = useState(false);
+  function changeSiteToExercises(){
     setButtonStateExercies(!buttonStateExercises);
+    if(buttonStateTracking){
+      changeSiteToTracking();
+    }
   }
 
   return (
     <div>
       <header className="App-header">
-        <div>
+        <div className="Site-buttons">
           <ChangeSiteButton
             className="Change-site-button"
             text="Exercises"
@@ -31,13 +37,12 @@ function App() {
             className="Change-site-button"
             text="Tracking"
             type="button"
-            onClick={changeSiteToExerises}/>
-            <br />
+            onClick={changeSiteToExercises}/>
         </div>
       </header>
-      <body className="App-body">
+      <div className="App-body">
         {buttonStateTracking && 
-          <Exercises/>
+          <ChooseMuscleGroup/>
         }
         {buttonStateExercises &&
           <Tracking/>
@@ -45,14 +50,9 @@ function App() {
         {!buttonStateTracking && !buttonStateExercises &&
           <BlankSite/>
         }
-      </body>
+      </div>
     </div>
   );
 }
 
 export default App;
-
-/*  po koncu zadnjega ChangeSiteButton-a
-<DetermineSite
-            determine={buttonState}/>
-*/

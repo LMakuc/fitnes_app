@@ -1,0 +1,34 @@
+.Change-site-button {
+    background-color: rgb(255, 255, 0);
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    width: 50%;
+    height: 50px;
+    outline: none;
+}
+
+.Muscle-group-button {
+    background-color: rgb(31, 31, 31);
+    color: rgb(255, 255, 0);
+    font-size: 15px;
+    border: none;
+    width: 25%;
+    padding: 10px;
+}
+
+.Display-muscle-groups-button {
+    background-color: rgb(31, 31, 31);
+    color: rgb(255, 221, 0);
+    min-width: 45%;
+    text-align: center;
+    height: 50px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.Site-buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}

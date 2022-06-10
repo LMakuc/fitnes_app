@@ -1,12 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
+
 import './App.css';
 
+import ChangeSiteButton from './Buttons/SiteButton';
+import Tracking from './Sites/Tracking/Tracking';
+import ChooseMuscleGroup from './Sites/Exercises/ChooseMuscleGroup';
+import BlankSite from './Sites/BlankSite';
+
 function App() {
+  
+  const [buttonStateTracking, setButtonStateTracking] = useState(false);
+  function changeSiteToTracking(){
+    setButtonStateTracking(!buttonStateTracking);
+    if(buttonStateExercises){
+      changeSiteToExercises();
+    } 
+  }
+  const [buttonStateExercises, setButtonStateExercies] = useState(false);
+  function changeSiteToExercises(){
+    setButtonStateExercies(!buttonStateExercises);
+    if(buttonStateTracking){
+      changeSiteToTracking();
+    }
+  }
+
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
-        
+        <div >
+          <ChangeSiteButton
+            className="Change-site-button"
+            text="Exercises"
+            type="button"
+            onClick={changeSiteToTracking}/>
+          <ChangeSiteButton
+            className="Change-site-button"
+            text="Tracking"
+            type="button"
+            onClick={changeSiteToExercises}/>
+        </div>
       </header>
+      <div className="App-body">
+        {buttonStateTracking && 
+          <ChooseMuscleGroup/>
+        }
+        {buttonStateExercises &&
+          <Tracking/>
+        }
+        {!buttonStateTracking && !buttonStateExercises &&
+          <BlankSite/>
+        }
+      </div>
     </div>
   );
 }

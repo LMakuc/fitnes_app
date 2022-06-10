@@ -1,0 +1,19 @@
+.Dumbbell {
+    height: 50px;
+    display: flex;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .Dumbbell {
+        animation: Dumbbell-spin infinite 10s linear;
+    }
+}
+
+@keyframes Dumbbell-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

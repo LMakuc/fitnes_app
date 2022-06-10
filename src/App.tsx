@@ -27,7 +27,7 @@ function App() {
   return (
     <div>
       <header className="App-header">
-        <div className="Site-buttons">
+        <div >
           <ChangeSiteButton
             className="Change-site-button"
             text="Exercises"

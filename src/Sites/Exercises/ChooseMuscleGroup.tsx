@@ -33,7 +33,7 @@ function ChooseMuscleGroup(){
             
             <div className="Choose-muscle-group">
                 <MuscleGroupButton
-                    className="Choose-muscle-group-button"
+                    className="Display-muscle-groups-button"
                     text="Choose muscle group"
                     type="button"
                     onClick={ChangeButtonValue}/>
@@ -55,6 +55,7 @@ function ChooseMuscleGroup(){
                 }
 
                 <Exercises group = {group}/>
+                
         </div>
     );
 }

@@ -1,0 +1,23 @@
+.ExerciseList {
+    height: 100%;
+    width: 100%;
+}
+
+.exercise {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.exerciseTitle {
+    height: 30px;
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+}
+
+.spinningImage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

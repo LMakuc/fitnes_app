@@ -5,7 +5,7 @@ import './App.css';
 import ChangeSiteButton from './Buttons/SiteButton';
 import Tracking from './Sites/Tracking/Tracking';
 import ChooseMuscleGroup from './Sites/Exercises/ChooseMuscleGroup';
-import BlankSite from './Sites/BlankSite';
+import BlankSite from './Sites/Blank/BlankSite';
 
 function App() {
   

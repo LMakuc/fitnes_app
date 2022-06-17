@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DumbBell from '../../Image/SpinningDumbBell';
+import DumbBell from '../../Images/SpinningDumbBell';
 
 import './ExerciseList.css';
 

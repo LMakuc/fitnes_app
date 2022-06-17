@@ -1,0 +1,43 @@
+.tracking-body {
+    background-color: rgb(60, 60, 60);
+    color: rgb(255, 221, 0);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.tracking-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem
+}
+
+.calendar {
+    background-color: rgb(31, 31, 31);
+    color: rgb(255, 221, 0);
+    width: 30%;
+}
+
+.exercise-weight-input {
+    color: rgb(255, 221, 0);
+    background-color: rgb(31, 31, 31);
+    text-align: center;
+    width: 50%;
+}
+
+.set-rep-input {
+    color: rgb(255, 221, 0);
+    background-color: rgb(31, 31, 31);
+    text-align: center;
+    width: 25px;
+    border: none;
+}
+
+.display-date-exercise-weight,
+.display-set-rep {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1rem;
+}

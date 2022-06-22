@@ -8,9 +8,10 @@ type Props = {
     name: string;
     
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ExerciseWeightInput({className, type, name, id, value, onChange}:Props){
+function ExerciseWeightInput({className, type, name, id, value, onChange, onBlur}:Props){
     return(
         <input 
             className={className}
@@ -18,7 +19,8 @@ function ExerciseWeightInput({className, type, name, id, value, onChange}:Props)
             name={name}
             id={id}
             value={value}
-            onChange={onChange}/>
+            onChange={onChange}
+            onBlur={onBlur}/>
     );
 }
 

@@ -8,8 +8,18 @@ import ExerciseWeightInput from './Form/ExerciseWeightInput';
 import ChangeSetRepValue from '../../Buttons/ChangeSetValueButton';
 import SetRepInput from './Form/SetRepInput';
 import SaveExercise from './SaveExercise';
-import Label from './Form/Label';
-import IncorrectInput from './Form/IncorrectInput';
+import Label from '../../Labels/Label';
+import OutputLocalStorage from './OutputLocalStorage';
+import DeleteLocalStorageButton from '../../Buttons/DeleteLocalStorageButton';
+
+type Exercise = {
+    date: Date;
+    exercise: string;
+    rep: number;
+    set: number;
+    weight: string;
+    key: string;
+}
 
 function Tracking(){
     
@@ -24,7 +34,7 @@ function Tracking(){
         setExercise(e.target.value);
     }
 
-    const [set, setSet] = useState(0);
+    const [set, setSet] = useState(1);
     function incrementSet(e: MouseEvent<HTMLElement>){
         setSet(set+1);
     }
@@ -33,19 +43,19 @@ function Tracking(){
             setSet(set-1);
         }
         else{
-            setSet(0);
+            setSet(1);
         }
     }
     function inputSet(e: ChangeEvent<HTMLInputElement>){
         if(e.target.value === ""){
-            setSet(0);
+            setSet(1);
         }
         else{
             setSet(parseInt(e.target.value));
         }
     }
 
-    const [rep, setRep] = useState(0);
+    const [rep, setRep] = useState(1);
     function incrementRep(e: MouseEvent<HTMLElement>){
         setRep(rep+1);
     }
@@ -54,12 +64,12 @@ function Tracking(){
             setRep(rep-1);
         }
         else{
-            setRep(0);
+            setRep(1);
         }
     }
     function inputRep(e: ChangeEvent<HTMLInputElement>){
         if(e.target.value === ""){
-            setRep(0);
+            setRep(1);
         }
         else{
             setRep(parseInt(e.target.value));
@@ -71,39 +81,70 @@ function Tracking(){
         setWeight(e.target.value);
     }
 
-    const [exerciseBool, setExerciseBool]=useState(false);
-    const [setBool, setSetBool]=useState(false);
-    const [repBool, setRepBool]=useState(false);
-    function booleanSet(){
-        if(!(exercise==="")){
-            setExerciseBool(true);
-        } else{
-            setExerciseBool(false);
-        }
-        if(!(set===0)){
-            setSetBool(true);
-        } else{
-            setSetBool(false);
-        }
-        if(!(rep===0)){
-            setRepBool(true);
-        } else{
-            setRepBool(false);
-        }
-        if(exerciseBool && setBool && repBool){
-            changeWrite();
-        }
-    }
-    const [write, setWrite] = useState(false);
-    function changeWrite(){
-        if(write){
-            setWrite(false);
-        }
-        else{
-            setWrite(true);
-        }
+    const [key, setKey] = useState ("");
+    function changeKey(){
+        setKey(exercise);
     }
 
+    const [submitted, setSubmitted] = useState(false);
+    function changeSubmittedBool(val: boolean){
+        setSubmitted(val);
+    }
+    const [dateBool, setDateBool] = useState(false);
+    function changeDateBool(val: boolean){
+        setDateBool(val);
+    }
+
+    const [exerciseBool, setExerciseBool]=useState(false);
+    function validateExeciseInput(e: ChangeEvent<HTMLInputElement>){
+        setExerciseBool(e.target.value !== "");
+    }
+
+    function saveExercise(){
+        console.log("Submit button clicked.")
+        if(date<new Date()){
+            changeDateBool(true);
+        } else{
+            changeDateBool(false);
+        }
+
+        if(dateBool && exerciseBool){
+            changeSubmittedBool(true);
+            console.log("Correct input");
+
+            const exerciseSave: Exercise = {
+                date, exercise, set, rep, weight, key
+            }
+            console.log(exerciseSave);
+            const newData = [...savedExercises, exerciseSave];
+            setSaveExercises(newData);
+            window.localStorage.setItem('savedExercises', JSON.stringify(newData));
+
+            //returnValuesToDefault();
+        } else{
+            changeSubmittedBool(true);
+        }
+
+        changeKey();
+    }
+
+    const stringData = window.localStorage.getItem('savedExercises');
+    const data: Exercise[] = stringData?JSON.parse(stringData) : [];
+    const [savedExercises, setSaveExercises] = useState<Exercise[]>(data);
+
+    /*function returnValuesToDefault(){
+        setDate(new Date());
+        setExercise("");
+        setSet(1);
+        setRep(1);
+        setWeight("0kg");
+    }*/
+
+    function deleteExercises(){
+        localStorage.removeItem('savedExercies');
+        setSaveExercises([]);
+    }
+    
     return(
         <div className="tracking-body">
             <div className="tracking-title">Exercise input</div>
@@ -122,6 +163,13 @@ function Tracking(){
                             value={date.toLocaleDateString("en-CA")}
                             onChange={getNewDate}/>
                     </div>
+                    <div className="wrong-input">
+                        {!dateBool && submitted && 
+                            <div>
+                                Wrong input. Date must be today or in the past.
+                            </div>
+                        }
+                    </div>
                 </div>
                 <div className="display-date-exercise-weight">
                     <div>
@@ -136,7 +184,15 @@ function Tracking(){
                             type="text"
                             name="exerciseInput"
                             value={exercise}
-                            onChange={inputExercise}/>
+                            onChange={inputExercise}
+                            onBlur={validateExeciseInput}/>
+                    </div>
+                    <div className="wrong-input">
+                        {!exerciseBool && submitted &&
+                            <div>
+                                Wrong input. You must input exercise name.
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="display-set-rep">
@@ -208,29 +264,21 @@ function Tracking(){
                     </div>
                 </div>
             </div>
+            <SaveExerciseButton
+                className="save-exercise-button"
+                type="button"
+                text="Submit exercise"
+                onClick={saveExercise}/>
+            <SaveExercise
+                savedExercises={savedExercises}/>
             <div>
-                <SaveExerciseButton
-                    className="save-exercise-button"
-                    type="button"
-                    text="Submit exercise"
-                    onClick={booleanSet}/>
+                <DeleteLocalStorageButton
+                    className="delete-local-storage-button"
+                    text="Delete exercises"
+                    onClick={deleteExercises}/>
             </div>
-            <div>
-                {write && 
-                    <SaveExercise
-                        date={date.toLocaleDateString("en-CA")}
-                        exercise={exercise}
-                        set={set}
-                        rep={rep}
-                        weight={weight}/>
-                }
-                {!write &&
-                    <IncorrectInput
-                        exerciseBool={exerciseBool}
-                        setBool={setBool}
-                        repBool={repBool}/>
-                }
-            </div>
+            <OutputLocalStorage
+                savedExercises={savedExercises}/>
         </div>
     );
 }

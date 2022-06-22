@@ -41,3 +41,13 @@
     justify-content: center;
     margin-bottom: 1rem;
 }
+
+.wrong-input {
+    text-decoration: underline;
+    color: rgb(255, 141, 65);
+    font-size: 13px;
+}
+
+.output-exercise {
+    margin-bottom: 2rem;
+}

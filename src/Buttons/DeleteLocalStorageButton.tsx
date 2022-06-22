@@ -1,12 +1,12 @@
 import React, {MouseEvent} from 'react';
 
 type Props = {
-    className: string;
+    className: string
     text: string;
-    onClick?: (e: MouseEvent<HTMLElement>) => void;
+    onClick?: (event: MouseEvent<HTMLElement>) => void
 }
 
-function WeightChangeButton({className, text, onClick}:Props){
+function DeleteLocalStorageButton ({className, text, onClick}: Props){
     return(
         <button
             className={className}
@@ -16,4 +16,4 @@ function WeightChangeButton({className, text, onClick}:Props){
     );
 }
 
-export default WeightChangeButton;
+export default DeleteLocalStorageButton;

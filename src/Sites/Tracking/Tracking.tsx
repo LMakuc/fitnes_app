@@ -18,13 +18,13 @@ type Exercise = {
     rep: number;
     set: number;
     weight: string;
-    key: string;
 }
 
 function Tracking(){
     
     const [date, setDate] = useState(new Date());
     function getNewDate(e: ChangeEvent<HTMLInputElement>){
+        validateDateInput();
         setDate(new Date(e.target.value));
     }
     //console.log(date);
@@ -81,18 +81,18 @@ function Tracking(){
         setWeight(e.target.value);
     }
 
-    const [key, setKey] = useState ("");
-    function changeKey(){
-        setKey(exercise);
-    }
-
     const [submitted, setSubmitted] = useState(false);
     function changeSubmittedBool(val: boolean){
         setSubmitted(val);
     }
-    const [dateBool, setDateBool] = useState(false);
-    function changeDateBool(val: boolean){
-        setDateBool(val);
+    const [dateBool, setDateBool] = useState(true);
+    function validateDateInput(){ 
+        if(new Date(date)>new Date()){
+            setDateBool(true);
+        } else {
+            setDateBool(false);
+        }
+        console.log("Date first: " + dateBool);
     }
 
     const [exerciseBool, setExerciseBool]=useState(false);
@@ -102,49 +102,46 @@ function Tracking(){
 
     function saveExercise(){
         console.log("Submit button clicked.")
-        if(date<new Date()){
-            changeDateBool(true);
-        } else{
-            changeDateBool(false);
-        }
+
+        changeSubmittedBool(true);
 
         if(dateBool && exerciseBool){
-            changeSubmittedBool(true);
             console.log("Correct input");
 
             const exerciseSave: Exercise = {
-                date, exercise, set, rep, weight, key
+                date, exercise, set, rep, weight
             }
             console.log(exerciseSave);
             const newData = [...savedExercises, exerciseSave];
             setSaveExercises(newData);
             window.localStorage.setItem('savedExercises', JSON.stringify(newData));
+            
 
-            //returnValuesToDefault();
-        } else{
-            changeSubmittedBool(true);
-        }
-
-        changeKey();
+            returnValuesToDefault();
+        } 
     }
 
     const stringData = window.localStorage.getItem('savedExercises');
     const data: Exercise[] = stringData?JSON.parse(stringData) : [];
     const [savedExercises, setSaveExercises] = useState<Exercise[]>(data);
 
-    /*function returnValuesToDefault(){
+    function returnValuesToDefault(){
         setDate(new Date());
-        setExercise("");
         setSet(1);
         setRep(1);
         setWeight("0kg");
-    }*/
+    }
 
     function deleteExercises(){
         localStorage.removeItem('savedExercies');
         setSaveExercises([]);
     }
     
+
+    console.log("Exercise bool: " + exerciseBool);
+    console.log("Date bool: " + dateBool);
+    console.log("Submitted: " + submitted);
+
     return(
         <div className="tracking-body">
             <div className="tracking-title">Exercise input</div>
@@ -164,7 +161,7 @@ function Tracking(){
                             onChange={getNewDate}/>
                     </div>
                     <div className="wrong-input">
-                        {!dateBool && submitted && 
+                        {!dateBool && 
                             <div>
                                 Wrong input. Date must be today or in the past.
                             </div>

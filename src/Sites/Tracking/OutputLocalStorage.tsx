@@ -13,13 +13,11 @@ type Props = {
     savedExercises: Exercise[];
 }
 
-
-
 function OutputLocalStorage({savedExercises}:Props){
     
-    const outputData = savedExercises.map((outputExercise)=>
-        <div className="output-exercise">
-            <div>Date: {outputExercise.date.getDay()}. {outputExercise.date.getMonth()}. {outputExercise.date.getFullYear()}</div>
+    const outputData = savedExercises.map((outputExercise, i)=>
+        <div className="output-exercise" key={i}>
+            <div>Date: {new Date(outputExercise.date).toLocaleDateString()}</div>
             <div>Exercise: {outputExercise.exercise} </div>
             <div>Rep: {outputExercise.rep}</div>
             <div>Set: {outputExercise.set}</div>
@@ -27,13 +25,13 @@ function OutputLocalStorage({savedExercises}:Props){
         </div>
     )
 
+
     return(
         
         <div>
             <div className="tracking-title">Exercise output</div>
             {true && 
-                outputData
-                
+                outputData  
             }
             <div></div>
         </div>

@@ -11,6 +11,7 @@ import SaveExercise from './SaveExercise';
 import Label from '../../Labels/Label';
 import OutputLocalStorage from './OutputLocalStorage';
 import DeleteLocalStorageButton from '../../Buttons/DeleteLocalStorageButton';
+import ClassicButton from '../../Buttons/ClassicButton';
 
 type Exercise = {
     date: Date;
@@ -144,6 +145,16 @@ function Tracking(){
 
     return(
         <div className="tracking-body">
+            <div>
+                <ClassicButton
+                    className="input-output-button"
+                    type="button"
+                    text="Exercise input"/>
+                <ClassicButton
+                    className="input-output-button"
+                    type="button"
+                    text="Exercise output"/>
+            </div>
             <div className="tracking-title">Exercise input</div>
             <div>
                 <div className = "display-date-exercise-weight">

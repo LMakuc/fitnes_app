@@ -20,7 +20,7 @@
     width: 30%;
 }
 
-.exercise-weight-input {
+.exercise-weight-comment-input {
     color: rgb(255, 221, 0);
     background-color: rgb(31, 31, 31);
     text-align: center;
@@ -52,4 +52,8 @@
 .output-exercise {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
+}
+
+.output-form {
+    margin-bottom: 2rem;
 }

@@ -1,6 +1,6 @@
 import React, {useState, MouseEvent} from 'react';
 
-import MuscleGroupButton from '../../Buttons/MuscleGroupButton';
+import ClassicButton from '../../Buttons/ClassicButton';
 import DisplayMuscleGroupButton from '../../Buttons/DisplayMuscleGroupButton';
 import Exercises from './Exercises'
 
@@ -32,7 +32,7 @@ function ChooseMuscleGroup(){
         <div className="Dropdown">
             
             <div className="Choose-muscle-group">
-                <MuscleGroupButton
+                <ClassicButton
                     className="Display-muscle-groups-button"
                     text="Choose muscle group"
                     type="button"

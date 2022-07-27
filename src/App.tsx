@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import './App.css';
 
-import ChangeSiteButton from './Buttons/SiteButton';
+import ClassicButton from './Buttons/ClassicButton';
 import Tracking from './Sites/Tracking/Tracking';
 import ChooseMuscleGroup from './Sites/Exercises/ChooseMuscleGroup';
 import BlankSite from './Sites/Blank/BlankSite';
@@ -28,12 +28,12 @@ function App() {
     <div>
       <header className="App-header">
         <div >
-          <ChangeSiteButton
+          <ClassicButton
             className="Change-site-button"
             text="Exercises"
             type="button"
             onClick={changeSiteToTracking}/>
-          <ChangeSiteButton
+          <ClassicButton
             className="Change-site-button"
             text="Tracking"
             type="button"

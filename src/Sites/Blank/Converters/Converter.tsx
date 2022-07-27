@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import Label from '../../../Labels/Label';
-import WeightChangeButton from '../../../Buttons/WeightConvertButton';
+import ClassicButton from '../../../Buttons/ClassicButton';
 
 function Converter(){
 
@@ -17,7 +17,7 @@ function Converter(){
             <Label
                 className="weight-convert-input-label"
                 text="Convert weight: "/>
-            <WeightChangeButton
+            <ClassicButton
                 className="weight-convert-unit-button"
                 onClick={changeUnit}
                 text="change unit"/>

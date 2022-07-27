@@ -11,7 +11,7 @@ type Props = {
     onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ExerciseWeightInput({className, type, name, id, value, onChange, onBlur}:Props){
+function ExerciseWeightCommentInput({className, type, name, id, value, onChange, onBlur}:Props){
     return(
         <input 
             className={className}
@@ -24,4 +24,4 @@ function ExerciseWeightInput({className, type, name, id, value, onChange, onBlur
     );
 }
 
-export default ExerciseWeightInput;
+export default ExerciseWeightCommentInput;

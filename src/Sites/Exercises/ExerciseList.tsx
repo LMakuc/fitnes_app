@@ -1,16 +1,17 @@
 import React, {useState, MouseEvent} from 'react';
 
 import DumbBell from '../../Images/SpinningDumbBell';
-import ExerciseToInputButton from '../../Buttons/ExerciseToInputButton';
+import ClassicButton from '../../Buttons/ClassicButton';
 
 import './ExerciseList.css';
 
-type Props = {
+type displayExercise = {
     title: string;
     exerciseNames: string[];
+    exerciseDescriptions: string[];
 }
 
-function ExerciseList({title, exerciseNames}:Props){
+function ExerciseList({title, exerciseNames, exerciseDescriptions}: displayExercise){
     
     const [exerciseName, setExerciseName] = useState("");
     function inputExerciseToForm(e: MouseEvent<HTMLElement>) {
@@ -18,23 +19,58 @@ function ExerciseList({title, exerciseNames}:Props){
     }
     console.log(exerciseName);
 
+    //const [exerciseDescription, setExerciseDescription] = useState("");
+
     return(
         <div className="ExercieList">
             <h1>{title}</h1>
 
             {exerciseNames.map((exerciseName, i) => (
-                <div className="exercise" key={exerciseName}>
-                    <ExerciseToInputButton
-                        className="exercise-input-button"
-                        text={(i+1)+(". ")+exerciseName}
-                        onClick={inputExerciseToForm}/>
-                    <div className="spinningImage"><DumbBell/></div>
+                <div className="exercise" key={i}>
+                    <div>
+                        <ClassicButton
+                            className="exercise-input-button"
+                            text={exerciseName}
+                            onClick={inputExerciseToForm}/>
+                        
+                        {exerciseDescriptions[i]}
+
+                        <div className="spinningImage">
+                            <DumbBell/>
+                        </div>
+                    </div>
                 </div>
             ))}
+            
         </div>
     );
 }
 
 export default ExerciseList;
 
-//<div className="exerciseTitle">{i+1}. {exerciseName}</div>
+/*
+            {exerciseNames.map((exerciseName, i) => (
+                <div className="exercise" key={i}>
+                    <div>
+                        <ClassicButton
+                            className="exercise-input-button"
+                            text={exerciseName}
+                            onClick={inputExerciseToForm}/>
+                        
+                        {exerciseDescriptions}
+
+                        <div className="spinningImage">
+                            <DumbBell/>
+                        </div>
+                    </div>
+                </div>
+            ))}
+
+
+                	    {exerciseDescriptions.map((exerciseDescription, k) =>(   //v type-u odstranit ?
+                            <div key={k}>
+                                {i === k &&
+                                    {exerciseDescription}
+                            </div>
+                        ))}
+*/

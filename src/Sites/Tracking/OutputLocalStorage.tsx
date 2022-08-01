@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState, ChangeEvent, useEffect} from 'react';
 
 import './Tracking.css';
 
@@ -19,36 +19,40 @@ type Props = {
 
 function OutputLocalStorage({savedExercises}:Props){
     
-    const outputData = savedExercises.map((outputExercise, i)=>
-            <div className="output-exercise" key={i}>
-                    <div>
-                        <div>Date: {new Date(outputExercise.date).toLocaleDateString()}</div>
-                        <div>Exercise: {outputExercise.exercise} </div>
-                        <div>Rep: {outputExercise.rep}</div>
-                        <div>Set: {outputExercise.set}</div>
-                        <div>Weight: {outputExercise.weight}</div>
-                        {outputExercise.comment!=="No comment" && 
-                            <div>Comment: {outputExercise.comment}</div>
-                        }
-                    </div>
-        </div>
-    )
-
+    //input and validation of date
+    const [inputDate, setInputDate] = useState(new Date());
+    function getNewDate(e: ChangeEvent<HTMLInputElement>){
+        setInputDate(new Date(e.target.value));
+    }
     const [dateBool, setDateBool] = useState(true);
-    function validateDateInput(){ 
-        if(new Date(inputDate)>new Date()){
+    useEffect(()=>{
+        if(inputDate<=new Date()){
             setDateBool(true);
         } else {
             setDateBool(false);
         }
-        console.log("Date first: " + dateBool);
-    }
+    }, [inputDate]);
 
-    const [inputDate, setInputDate] = useState(new Date());
-    function getNewDate(e: ChangeEvent<HTMLInputElement>){
-        validateDateInput();
-        setInputDate(new Date(e.target.value));
-    }
+    const outputData = savedExercises.map((outputExercise, i)=>
+        <div key={i}>
+            { new Date(outputExercise.date).getDay() === inputDate.getDay() &&
+            new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
+            new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
+                <div className="output-exercise">
+                    <div>Date: {new Date(outputExercise.date).toLocaleDateString()}</div>
+                    <div>Exercise: {outputExercise.exercise} </div>
+                    <div>Set: {outputExercise.set}</div>
+                    <div>Rep: {outputExercise.rep}</div>
+                    {outputExercise.weight !=="0kg" && outputExercise.weight !=="0" &&
+                        <div>Weight: {outputExercise.weight}</div>
+                    }
+                    {outputExercise.comment!=="/" && 
+                        <div>Comment: {outputExercise.comment}</div>
+                    }
+                </div>
+            }
+        </div>
+    )
 
     return(
         
@@ -77,9 +81,8 @@ function OutputLocalStorage({savedExercises}:Props){
                     }
                 </div>
             </div>
-                
             {true && 
-                outputData  
+                outputData
             }
         </div>
     );

@@ -57,3 +57,8 @@
 .output-form {
     margin-bottom: 2rem;
 }
+
+.exercise-submit-text-display {
+    color: rgb(21, 255, 0);
+    font-size: 13px;
+}

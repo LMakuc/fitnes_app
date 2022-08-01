@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, MouseEvent} from 'react';
+import React, {useState, ChangeEvent, MouseEvent, useEffect} from 'react';
 
 import './Tracking.css';
 
@@ -9,6 +9,7 @@ import SaveExercise from './SaveExercise';
 import Label from '../../Labels/Label';
 import OutputLocalStorage from './OutputLocalStorage';
 import ClassicButton from '../../Buttons/ClassicButton';
+import TimedDisplay from './Form/TimedDisplay';
 
 type Exercise = {
     date: Date;
@@ -21,18 +22,42 @@ type Exercise = {
 
 function Tracking(){
     
+    //date input and validation
     const [date, setDate] = useState(new Date());
     function getNewDate(e: ChangeEvent<HTMLInputElement>){
-        validateDateInput();
         setDate(new Date(e.target.value));
+        
     }
-    //console.log(date);
+    const [dateBool, setDateBool] = useState(true);
+    useEffect(()=>
+        {
+            if(date<=new Date()){
+                setDateBool(true);
+            } else {
+                setDateBool(false);
+            } 
+        }, [date]
+    )
 
-    const [exercise, setExercise] = useState("");
+
+    //exercise input and validation
+    const [exercise, setExercise] = useState("Exercise");
     function inputExercise(e: ChangeEvent<HTMLInputElement>){
         setExercise(e.target.value);
     }
+    const [exerciseBool, setExerciseBool]=useState(false);
+    useEffect(() =>
+        { 
+            if(exercise === ""){
+                setExerciseBool(false);
+            } else {
+                setExerciseBool(true);
+            }
+        }, [exercise]
+    )
 
+
+    //set validation and input
     const [set, setSet] = useState(1);
     function incrementSet(e: MouseEvent<HTMLElement>){
         setSet(set+1);
@@ -54,6 +79,8 @@ function Tracking(){
         }
     }
 
+
+    //rep validation and input
     const [rep, setRep] = useState(1);
     function incrementRep(e: MouseEvent<HTMLElement>){
         setRep(rep+1);
@@ -75,42 +102,31 @@ function Tracking(){
         }
     }
 
+
+    //weight input
     const [weight, setWeight] = useState("0kg");
     function inputWeight(e: ChangeEvent<HTMLInputElement>){
         setWeight(e.target.value);
     }
 
-    const [comment, setComment] = useState("No comment")
+
+    //comment input
+    const [comment, setComment] = useState("/")
     function inputComment(e: ChangeEvent<HTMLInputElement>){
         setComment(e.target.value);
     }
 
     const [submitted, setSubmitted] = useState(false);
-    function changeSubmittedBool(val: boolean){
-        setSubmitted(val);
-    }
-    const [dateBool, setDateBool] = useState(true);
-    function validateDateInput(){ 
-        if(new Date(date)>new Date()){
-            setDateBool(true);
-        } else {
-            setDateBool(false);
-        }
-        console.log("Date first: " + dateBool);
-    }
 
-    const [exerciseBool, setExerciseBool]=useState(false);
-    function validateExeciseInput(e: ChangeEvent<HTMLInputElement>){
-        setExerciseBool(e.target.value !== "");
-    }
+    
 
     function saveExercise(){
-        console.log("Submit button clicked.")
+        //console.log("Submit button clicked.")
 
-        changeSubmittedBool(true);
+        setSubmitted(true);
 
         if(dateBool && exerciseBool){
-            console.log("Correct input");
+            //console.log("Correct input");
 
             const exerciseSave: Exercise = {
                 date, exercise, set, rep, weight, comment
@@ -119,8 +135,7 @@ function Tracking(){
             const newData = [...savedExercises, exerciseSave];
             setSaveExercises(newData);
             window.localStorage.setItem('savedExercises', JSON.stringify(newData));
-            
-
+                
             returnValuesToDefault();
         } 
     }
@@ -141,11 +156,6 @@ function Tracking(){
         localStorage.removeItem('savedExercies');
         setSaveExercises([]);
     }
-    
-
-    console.log("Exercise bool: " + exerciseBool);
-    console.log("Date bool: " + dateBool);
-    console.log("Submitted: " + submitted);
 
 
     const [inputBool, setInputBool] = useState(true);                       //odpiranje in hkrati zapiranje output in input exercisa
@@ -167,6 +177,7 @@ function Tracking(){
 
     return(
         <div className="tracking-body">
+            {/* Exercise input and Exercise output buttons*/}
             <div>
                 <ClassicButton
                     className="input-output-button"
@@ -184,6 +195,7 @@ function Tracking(){
                     <div className="tracking-title">Exercise input</div>
                     <div>
                         <div className = "display-date-exercise-weight">
+                            {/*Date input*/}
                             <div>
                                 <Label
                                     className="calendar-label"
@@ -195,7 +207,8 @@ function Tracking(){
                                     id="calendar"
                                     type="date"
                                     value={date.toLocaleDateString("en-CA")}
-                                    onChange={getNewDate}/>
+                                    onChange={getNewDate}
+                                    />
                             </div>
                             <div className="wrong-input">
                                 {!dateBool && 
@@ -206,6 +219,7 @@ function Tracking(){
                             </div>
                         </div>
                         <div className="display-date-exercise-weight">
+                            {/*Exercise input*/}
                             <div>
                                 <Label
                                     className="exercise-label"
@@ -219,10 +233,10 @@ function Tracking(){
                                     name="exerciseInput"
                                     value={exercise}
                                     onChange={inputExercise}
-                                    onBlur={validateExeciseInput}/>
+                                    />
                             </div>
                             <div className="wrong-input">
-                                {!exerciseBool && submitted &&
+                                {!exerciseBool && 
                                     <div>
                                         Wrong input. You must input exercise name.
                                     </div>
@@ -230,6 +244,7 @@ function Tracking(){
                             </div>
                         </div>
                         <div className="display-set-rep">
+                            {/*Set input*/}
                             <div>
                                 <Label
                                     className="set-label"
@@ -256,6 +271,7 @@ function Tracking(){
                             </div>
                         </div>
                         <div className="display-set-rep">
+                            {/*Rep input*/}
                             <div>
                                 <Label
                                     className="rep-label"
@@ -282,6 +298,7 @@ function Tracking(){
                             </div>
                         </div>
                         <div className="display-date-exercise-weight">
+                            {/*Weight input*/}
                             <div>
                                 <Label  
                                     className="weight-label"
@@ -298,6 +315,7 @@ function Tracking(){
                             </div>
                         </div>
                         <div className="display-date-exercise-weight">
+                            {/*Comment input*/}
                             <div>
                                 <Label
                                     className="comment-label"
@@ -314,11 +332,20 @@ function Tracking(){
                             </div>
                         </div>
                     </div>
+                    {/*Exercise submittion*/}
                     <ClassicButton
                         className="save-exercise-button"
                         type="button"
                         text="Submit exercise"
                         onClick={saveExercise}/>
+                    {submitted && 
+                        <TimedDisplay
+                            className={"exercise-submit-text-display"}
+                            text={"Exercise succesfully submited"}
+                            time={3000}
+                            show={submitted}
+                            setShow={setSubmitted}/>
+                    }
                     <SaveExercise
                         savedExercises={savedExercises}/>
                         </div>

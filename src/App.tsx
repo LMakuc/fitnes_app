@@ -9,18 +9,28 @@ import BlankSite from './Sites/Blank/BlankSite';
 
 function App() {
   
-  const [buttonStateTracking, setButtonStateTracking] = useState(false);
+  const [buttonStateTracking, setButtonStateTracking] = useState(true);
   function changeSiteToTracking(){
-    setButtonStateTracking(!buttonStateTracking);
-    if(buttonStateExercises){
-      changeSiteToExercises();
-    } 
+    setButtonStateTracking(true);
+    if(buttonStateExercises || buttonStateCalculators){
+      setButtonStateExercies(false);
+      setButtonStateCalculators(false);
+    }
   }
   const [buttonStateExercises, setButtonStateExercies] = useState(false);
   function changeSiteToExercises(){
-    setButtonStateExercies(!buttonStateExercises);
-    if(buttonStateTracking){
-      changeSiteToTracking();
+    setButtonStateExercies(true);
+    if(buttonStateTracking || buttonStateCalculators){
+      setButtonStateTracking(false);
+      setButtonStateCalculators(false);
+    }
+  }
+  const[buttonStateCalculators, setButtonStateCalculators] = useState(false);
+  function changeSiteToCalculators(){
+    setButtonStateCalculators(true);
+    if(buttonStateTracking || buttonStateExercises){
+      setButtonStateTracking(false);
+      setButtonStateExercies(false);
     }
   }
 
@@ -35,6 +45,11 @@ function App() {
             onClick={changeSiteToTracking}/>
           <ClassicButton
             className="Change-site-button"
+            text="Calculators"
+            type="button"
+            onClick={changeSiteToCalculators}/>
+          <ClassicButton
+            className="Change-site-button"
             text="Tracking"
             type="button"
             onClick={changeSiteToExercises}/>
@@ -45,9 +60,10 @@ function App() {
           <ChooseMuscleGroup/>
         }
         {buttonStateExercises &&
-          <Tracking/>
+          <Tracking
+            output={true}/>
         }
-        {!buttonStateTracking && !buttonStateExercises &&
+        {buttonStateCalculators &&
           <BlankSite/>
         }
       </div>

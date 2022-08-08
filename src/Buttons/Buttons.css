@@ -1,9 +1,9 @@
 .Change-site-button {
     background-color: rgb(255, 255, 0);
     color: rgb(0, 0, 0);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
-    width: 50%;
+    width: 33.3333%;
     height: 4.5rem;
     outline: none;
 }
@@ -62,7 +62,8 @@
     border: none;
 }
 
-.delete-local-storage-button {
+.delete-local-storage-button,
+.delete-one-exercise-button {
     color: rgb(255, 221, 0);
     background-color: rgb(31, 31, 31);
     border: none;

@@ -4,6 +4,8 @@ import './Tracking.css';
 
 import DisplayCalendar from './Form/Calendar'
 import Label from '../../Labels/Label'
+import ClassicButton from '../../Buttons/ClassicButton';
+import Tracking from './Tracking';
 
 type Exercise = {
     date: Date;
@@ -13,6 +15,7 @@ type Exercise = {
     weight: string;
     comment: string;
 }
+
 type Props = {
     savedExercises: Exercise[];
 }
@@ -33,9 +36,27 @@ function OutputLocalStorage({savedExercises}:Props){
         }
     }, [inputDate]);
 
-    const outputData = savedExercises.map((outputExercise, i)=>
+    //elements in local storage saved into a state exercises
+    const stringData = window.localStorage.getItem('savedExercises');
+    const data: Exercise[] = stringData?JSON.parse(stringData) : [];
+    const [exercises, setExercises] = useState<Exercise[]>(data);
+
+    useEffect(() => {
+        window.localStorage.setItem('savedExercises', JSON.stringify(exercises));
+    },[exercises])
+    
+    function deleteExercise(i: number) {
+        console.log(exercises);
+        
+        //deleting element of a table
+        setExercises((prevState) =>
+            prevState.filter((prevItem, index) => index !== i)
+        );
+    }
+
+    const outputData = exercises.map((outputExercise, i)=>
         <div key={i}>
-            { new Date(outputExercise.date).getDay() === inputDate.getDay() &&
+            {new Date(outputExercise.date).getDay() === inputDate.getDay() &&
             new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
             new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
                 <div className="output-exercise">
@@ -49,6 +70,19 @@ function OutputLocalStorage({savedExercises}:Props){
                     {outputExercise.comment!=="/" && 
                         <div>Comment: {outputExercise.comment}</div>
                     }
+                    <ClassicButton
+                        className="delete-one-exercise-button"
+                        text="Delete"
+                        onClick={()=>{
+                            <Tracking
+                                output={false}
+                                index={i}
+                                deleteOneExercise={()=>{
+                                    deleteExercise(i);
+                                }}
+                                />
+                            //deleteExercise(i);
+                        }}/>
                 </div>
             }
         </div>
@@ -57,6 +91,7 @@ function OutputLocalStorage({savedExercises}:Props){
     return(
         
         <div>
+            
             <div className="tracking-title">Exercise output</div>
             
             <div className="output-form">

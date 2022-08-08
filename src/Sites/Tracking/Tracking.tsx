@@ -5,7 +5,7 @@ import './Tracking.css';
 import DisplayCalendar from './Form/Calendar';
 import ExerciseWeightCommentInput from './Form/ExerciseWeightCommentInput';
 import SetRepInput from './Form/SetRepInput';
-import SaveExercise from './SaveExercise';
+//import SaveExercise from './SaveExercise';
 import Label from '../../Labels/Label';
 import OutputLocalStorage from './OutputLocalStorage';
 import ClassicButton from '../../Buttons/ClassicButton';
@@ -20,8 +20,16 @@ type Exercise = {
     comment: string;
 }
 
-function Tracking(){
-    
+type props={
+    output: boolean;
+    index?: number;
+    deleteOneExercise?:(i: number)=>void;
+}
+
+function Tracking({output, index, deleteOneExercise}:props){
+
+    console.log(output);
+
     //date input and validation
     const [date, setDate] = useState(new Date());
     function getNewDate(e: ChangeEvent<HTMLInputElement>){
@@ -121,8 +129,6 @@ function Tracking(){
     
 
     function saveExercise(){
-        //console.log("Submit button clicked.")
-
         setSubmitted(true);
 
         if(dateBool && exerciseBool){
@@ -140,16 +146,20 @@ function Tracking(){
         } 
     }
 
+    
+
     const stringData = window.localStorage.getItem('savedExercises');
     const data: Exercise[] = stringData?JSON.parse(stringData) : [];
     const [savedExercises, setSaveExercises] = useState<Exercise[]>(data);
+
+    
 
     function returnValuesToDefault(){
         setDate(new Date());
         setSet(1);
         setRep(1);
         setWeight("0kg");
-        setComment("No comment")
+        setComment("/")
     }
 
     function deleteExercises(){
@@ -157,8 +167,8 @@ function Tracking(){
         setSaveExercises([]);
     }
 
-
-    const [inputBool, setInputBool] = useState(true);                       //odpiranje in hkrati zapiranje output in input exercisa
+    //Changing between Exercise input and Exercise output
+    const [inputBool, setInputBool] = useState(true);
     function openInput(){
         closeOutput();
     }
@@ -176,193 +186,197 @@ function Tracking(){
     }
 
     return(
-        <div className="tracking-body">
-            {/* Exercise input and Exercise output buttons*/}
-            <div>
-                <ClassicButton
-                    className="input-output-button"
-                    type="button"
-                    text="Exercise input"
-                    onClick={openInput}/>
-                <ClassicButton
-                    className="input-output-button"
-                    type="button"
-                    text="Exercise output"
-                    onClick={openOutput}/>
-            </div>
-            {inputBool && 
-                <div>
-                    <div className="tracking-title">Exercise input</div>
-                    <div>
-                        <div className = "display-date-exercise-weight">
-                            {/*Date input*/}
-                            <div>
-                                <Label
-                                    className="calendar-label"
-                                    text="Input date: "/>
-                            </div>
-                            <div>
-                                <DisplayCalendar
-                                    className="calendar"
-                                    id="calendar"
-                                    type="date"
-                                    value={date.toLocaleDateString("en-CA")}
-                                    onChange={getNewDate}
-                                    />
-                            </div>
-                            <div className="wrong-input">
-                                {!dateBool && 
-                                    <div>
-                                        Wrong input. Date must be today or in the past.
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <div className="display-date-exercise-weight">
-                            {/*Exercise input*/}
-                            <div>
-                                <Label
-                                    className="exercise-label"
-                                    text="Input exercise: "/>
-                            </div>
-                            <div>
-                                <ExerciseWeightCommentInput
-                                    className="exercise-weight-comment-input"
-                                    id="exerciseInput"
-                                    type="text"
-                                    name="exerciseInput"
-                                    value={exercise}
-                                    onChange={inputExercise}
-                                    />
-                            </div>
-                            <div className="wrong-input">
-                                {!exerciseBool && 
-                                    <div>
-                                        Wrong input. You must input exercise name.
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <div className="display-set-rep">
-                            {/*Set input*/}
-                            <div>
-                                <Label
-                                    className="set-label"
-                                    text="Input set: "/>
-                            </div>
-                            <div>
-                                <ClassicButton
-                                    className="decrement-set-rep"
-                                    text="-"
-                                    id="decrement-set"
-                                    onClick={decrementSet}/>
-                                <SetRepInput
-                                    className="set-rep-input"
-                                    id="setInput"
-                                    type="text"
-                                    name="setInput"
-                                    value={set}
-                                    onChange={inputSet}/>
-                                <ClassicButton
-                                    className="increment-set-rep"
-                                    text="+"
-                                    id="increment-set"
-                                    onClick={incrementSet}/>
-                            </div>
-                        </div>
-                        <div className="display-set-rep">
-                            {/*Rep input*/}
-                            <div>
-                                <Label
-                                    className="rep-label"
-                                    text="Input duration/reps: "/>
-                            </div>
-                            <div>
-                                <ClassicButton
-                                    className="decrement-set-rep"
-                                    text="-"
-                                    id="decrement-rep"
-                                    onClick={decrementRep}/>
-                                <SetRepInput
-                                    className="set-rep-input"
-                                    id="repInput"
-                                    type="text"
-                                    name="repInput"
-                                    value={rep}
-                                    onChange = {inputRep}/>
-                                <ClassicButton
-                                    className="increment-set-rep"
-                                    text="+"
-                                    id="increment-rep"
-                                    onClick={incrementRep}/>
-                            </div>
-                        </div>
-                        <div className="display-date-exercise-weight">
-                            {/*Weight input*/}
-                            <div>
-                                <Label  
-                                    className="weight-label"
-                                    text="Weight: "/>
-                            </div>
-                            <div>
-                                <ExerciseWeightCommentInput
-                                    className="exercise-weight-comment-input"
-                                    id="weight-input"
-                                    type="text"
-                                    name="weightInput"
-                                    value={weight}
-                                    onChange={inputWeight}/>
-                            </div>
-                        </div>
-                        <div className="display-date-exercise-weight">
-                            {/*Comment input*/}
-                            <div>
-                                <Label
-                                    className="comment-label"
-                                    text="Comment (optional):"/>
-                            </div>
-                            <div>
-                                <ExerciseWeightCommentInput
-                                    className="exercise-weight-comment-input"
-                                    id="commentInput"
-                                    type="text"
-                                    name="commentInput"
-                                    value={comment}
-                                    onChange={inputComment}/>
-                            </div>
-                        </div>
-                    </div>
-                    {/*Exercise submittion*/}
-                    <ClassicButton
-                        className="save-exercise-button"
-                        type="button"
-                        text="Submit exercise"
-                        onClick={saveExercise}/>
-                    {submitted && 
-                        <TimedDisplay
-                            className={"exercise-submit-text-display"}
-                            text={"Exercise succesfully submited"}
-                            time={3000}
-                            show={submitted}
-                            setShow={setSubmitted}/>
-                    }
-                    <SaveExercise
-                        savedExercises={savedExercises}/>
-                        </div>
-            }
-            {outputBool && 
-                <div>
+        <div>
+            {output &&
+                <div className="tracking-body">
+                    {/* Exercise input and Exercise output buttons*/}
                     <div>
                         <ClassicButton
-                            className="delete-local-storage-button"
+                            className="input-output-button"
                             type="button"
-                            text="Delete exercises"
-                            onClick={deleteExercises}/>
+                            text="Exercise input"
+                            onClick={openInput}/>
+                        <ClassicButton
+                            className="input-output-button"
+                            type="button"
+                            text="Exercise output"
+                            onClick={openOutput}/>
                     </div>
-                    <OutputLocalStorage
-                        savedExercises={savedExercises}/>
-                </div>
-            }     
+                    {inputBool && 
+                        <div>
+                            <div className="tracking-title">Exercise input</div>
+                            <div>
+                                <div className = "display-date-exercise-weight">
+                                    {/*Date input*/}
+                                    <div>
+                                        <Label
+                                            className="calendar-label"
+                                            text="Input date: "/>
+                                    </div>
+                                    <div>
+                                        <DisplayCalendar
+                                            className="calendar"
+                                            id="calendar"
+                                            type="date"
+                                            value={date.toLocaleDateString("en-CA")}
+                                            onChange={getNewDate}
+                                            />
+                                    </div>
+                                    <div className="wrong-input">
+                                        {!dateBool && 
+                                            <div>
+                                                Wrong input. Date must be today or in the past.
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="display-date-exercise-weight">
+                                    {/*Exercise input*/}
+                                    <div>
+                                        <Label
+                                            className="exercise-label"
+                                            text="Input exercise: "/>
+                                    </div>
+                                    <div>
+                                        <ExerciseWeightCommentInput
+                                            className="exercise-weight-comment-input"
+                                            id="exerciseInput"
+                                            type="text"
+                                            name="exerciseInput"
+                                            value={exercise}
+                                            onChange={inputExercise}
+                                            />
+                                    </div>
+                                    <div className="wrong-input">
+                                        {!exerciseBool && 
+                                            <div>
+                                                Wrong input. You must input exercise name.
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="display-set-rep">
+                                    {/*Set input*/}
+                                    <div>
+                                        <Label
+                                            className="set-label"
+                                            text="Input set: "/>
+                                    </div>
+                                    <div>
+                                        <ClassicButton
+                                            className="decrement-set-rep"
+                                            text="-"
+                                            id="decrement-set"
+                                            onClick={decrementSet}/>
+                                        <SetRepInput
+                                            className="set-rep-input"
+                                            id="setInput"
+                                            type="text"
+                                            name="setInput"
+                                            value={set}
+                                            onChange={inputSet}/>
+                                        <ClassicButton
+                                            className="increment-set-rep"
+                                            text="+"
+                                            id="increment-set"
+                                            onClick={incrementSet}/>
+                                    </div>
+                                </div>
+                                <div className="display-set-rep">
+                                    {/*Rep input*/}
+                                    <div>
+                                        <Label
+                                            className="rep-label"
+                                            text="Input duration/reps: "/>
+                                    </div>
+                                    <div>
+                                        <ClassicButton
+                                            className="decrement-set-rep"
+                                            text="-"
+                                            id="decrement-rep"
+                                            onClick={decrementRep}/>
+                                        <SetRepInput
+                                            className="set-rep-input"
+                                            id="repInput"
+                                            type="text"
+                                            name="repInput"
+                                            value={rep}
+                                            onChange = {inputRep}/>
+                                        <ClassicButton
+                                            className="increment-set-rep"
+                                            text="+"
+                                            id="increment-rep"
+                                            onClick={incrementRep}/>
+                                    </div>
+                                </div>
+                                <div className="display-date-exercise-weight">
+                                    {/*Weight input*/}
+                                    <div>
+                                        <Label  
+                                            className="weight-label"
+                                            text="Weight: "/>
+                                    </div>
+                                    <div>
+                                        <ExerciseWeightCommentInput
+                                            className="exercise-weight-comment-input"
+                                            id="weight-input"
+                                            type="text"
+                                            name="weightInput"
+                                            value={weight}
+                                            onChange={inputWeight}/>
+                                    </div>
+                                </div>
+                                <div className="display-date-exercise-weight">
+                                    {/*Comment input*/}
+                                    <div>
+                                        <Label
+                                            className="comment-label"
+                                            text="Comment (optional):"/>
+                                    </div>
+                                    <div>
+                                        <ExerciseWeightCommentInput
+                                            className="exercise-weight-comment-input"
+                                            id="commentInput"
+                                            type="text"
+                                            name="commentInput"
+                                            value={comment}
+                                            onChange={inputComment}/>
+                                    </div>
+                                </div>
+                            </div>
+                            {/*Exercise submittion*/}
+                            <ClassicButton
+                                className="save-exercise-button"
+                                type="button"
+                                text="Submit exercise"
+                                onClick={saveExercise}/>
+                            {submitted && 
+                                <TimedDisplay
+                                    className={"exercise-submit-text-display"}
+                                    text={"Exercise succesfully submited"}
+                                    time={3000}
+                                    show={submitted}
+                                    setShow={setSubmitted}/>
+                            }
+                            {/*<SaveExercise savedExercises={savedExercises}/>*/}
+                        </div>
+                    }
+                    {outputBool && 
+                        <div>
+                            <div>
+                                <ClassicButton
+                                    className="delete-local-storage-button"
+                                    type="button"
+                                    text="Delete all exercises"
+                                    onClick={deleteExercises}/>
+                            </div>
+                            
+                            <OutputLocalStorage
+                                savedExercises={savedExercises}/>
+                        </div>
+                    }     
+                </div>            
+            }
         </div>
     );
 }

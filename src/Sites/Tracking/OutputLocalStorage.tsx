@@ -5,7 +5,6 @@ import './Tracking.css';
 import DisplayCalendar from './Form/Calendar'
 import Label from '../../Labels/Label'
 import ClassicButton from '../../Buttons/ClassicButton';
-import Tracking from './Tracking';
 
 type Exercise = {
     date: Date;
@@ -26,6 +25,7 @@ function OutputLocalStorage({savedExercises}:Props){
     const [inputDate, setInputDate] = useState(new Date());
     function getNewDate(e: ChangeEvent<HTMLInputElement>){
         setInputDate(new Date(e.target.value));
+        getExerciseNames();
     }
     const [dateBool, setDateBool] = useState(true);
     useEffect(()=>{
@@ -53,6 +53,65 @@ function OutputLocalStorage({savedExercises}:Props){
             prevState.filter((prevItem, index) => index !== i)
         );
     }
+    
+    
+    function getExerciseNames(){
+        const dateFilteredExercises = exercises.filter((exercise) => 
+            new Date(exercise.date).getDay() === inputDate.getDay() &&
+            new Date(exercise.date).getMonth() === inputDate.getMonth() &&
+            new Date(exercise.date).getFullYear() === inputDate.getFullYear());
+        console.log(dateFilteredExercises);
+
+        const exerciseNames: string[] = [];
+        dateFilteredExercises.forEach((exercise) =>{ 
+            console.log(exercise);
+            if(!(exerciseNames.includes(exercise.exercise))){
+                exerciseNames.push(exercise.exercise);
+            }
+            return <div></div>;
+        });
+
+        return exerciseNames;
+    }
+
+    const exerciseNames = getExerciseNames();
+    console.log(exerciseNames);
+
+    const exerciseNames2 = [...new Set(exercises.map(exercise => exercise.exercise))];
+
+    const outputTables = exerciseNames2.map((name) => (
+            <table style={{ marginBottom: '2rem' }}>
+                <thead>
+                    <tr>
+                        <th colSpan={4}>{name}</th>
+                    </tr>
+                    <tr>
+                        <th>Weight</th>
+                        <th>Rep</th>
+                        <th>Set</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {exercises
+                        .filter((outputExercise) => 
+                            new Date(outputExercise.date).getDay() === inputDate.getDay() &&
+                            new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
+                            new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
+                            outputExercise.exercise === name)
+                        .map((outputExercise) => (
+                            <tr>
+                                <td>{outputExercise.weight}</td>
+                                <td>{outputExercise.rep}</td>
+                                <td>{outputExercise.set}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+    ));
+
+      
+      
 
     const outputData = exercises.map((outputExercise, i)=>
         <div key={i}>
@@ -74,24 +133,28 @@ function OutputLocalStorage({savedExercises}:Props){
                         className="delete-one-exercise-button"
                         text="Delete"
                         onClick={()=>{
-                            <Tracking
-                                output={false}
-                                index={i}
-                                deleteOneExercise={()=>{
-                                    deleteExercise(i);
-                                }}
-                                />
-                            //deleteExercise(i);
+                            deleteExercise(i);
                         }}/>
                 </div>
             }
         </div>
     )
+        
+    function deleteAllExercises(){
+        localStorage.removeItem('savedExercies');
+        setExercises([]);
+    }
 
     return(
         
         <div>
-            
+            <div>
+                <ClassicButton
+                    className="delete-local-storage-button"
+                    type="button"
+                    text="Delete all exercises"
+                    onClick={deleteAllExercises}/>
+            </div>
             <div className="tracking-title">Exercise output</div>
             
             <div className="output-form">
@@ -116,8 +179,11 @@ function OutputLocalStorage({savedExercises}:Props){
                     }
                 </div>
             </div>
-            {true && 
+            {false && 
                 outputData
+            }
+            {true && 
+                outputTables
             }
         </div>
     );

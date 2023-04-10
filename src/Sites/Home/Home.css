@@ -1,0 +1,33 @@
+/*.home-body {
+    background-color: rgb(60, 60, 60);
+    color: rgb(255, 221, 0);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}*/
+
+.home-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+}
+
+.calculators {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.incorrect-input {
+    text-decoration: underline;
+    color: rgb(255, 141, 65);
+    font-size: 13px;
+    margin-bottom: 1rem;
+}
+
+.calorie-counter-input {
+    color: rgb(255, 221, 0);
+    background-color: rgb(31, 31, 31);
+    text-align: center;
+    width: 50%;
+}

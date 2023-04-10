@@ -4,6 +4,7 @@ import DumbBell from '../../Images/SpinningDumbBell';
 import ClassicButton from '../../Buttons/ClassicButton';
 
 import './ExerciseList.css';
+import '../../App.css';
 
 type displayExercise = {
     title: string;
@@ -17,6 +18,7 @@ function ExerciseList({title, exerciseNames, exerciseDescriptions}: displayExerc
     function inputExerciseToForm(e: MouseEvent<HTMLElement>) {
         setExerciseName(e.currentTarget.textContent as string);
     }
+
     console.log(exerciseName);
 
     return(
@@ -30,7 +32,7 @@ function ExerciseList({title, exerciseNames, exerciseDescriptions}: displayExerc
                         text={exerciseName}
                         onClick={inputExerciseToForm}/>
                     
-                    <div className="exercise-description">
+                    <div className="text-background">
                         {exerciseDescriptions[i]}
                     </div>
 

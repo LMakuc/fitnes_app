@@ -1,4 +1,4 @@
-.Change-site-button {
+/*.Change-site-button {
     background-color: rgb(255, 255, 0);
     color: rgb(0, 0, 0);
     font-size: 1.4rem;
@@ -6,10 +6,12 @@
     width: 33.3333%;
     height: 4.5rem;
     outline: none;
-}
+    position: relative;
+}*/
 
 .Muscle-group-button {
-    background-color: rgb(31, 31, 31);
+    /*background-color: rgb(31, 31, 31);*/
+    background-color: rgb(41, 41, 41);
     color: rgb(255, 255, 0);
     font-size: 15px;
     height: 3rem;
@@ -18,8 +20,9 @@
     padding: 10px;
 }
 
-.Display-muscle-groups-button {
-    background-color: rgb(31, 31, 31);
+.Display-muscle-groups-button,
+.Add-routine-button {
+    background-color: rgb(41, 41, 41);
     color: rgb(255, 221, 0);
     width: 100%;
     text-align: center;
@@ -43,7 +46,8 @@
     border: none;
 }
 
-.save-exercise-button {
+.save-exercise-button,
+.calorie-counter-submit-button {
     color: rgb(255, 221, 0);
     background-color: rgb(31, 31, 31);
     text-align: center;
@@ -78,4 +82,23 @@
     background-color: rgb(31, 31, 31);
     font-size: 1rem;
     border: none;
+}
+
+.choose-calculator-button {
+    /*background-color: rgb(31, 31, 31);*/
+    background-color: rgb(41, 41, 41);
+    color: rgb(255, 221, 0);
+    height: 2.5rem;
+    border: none;
+    /*text-align: left;*/
+    font-size: 15px;
+    width: 33.33%;
+}
+
+.show-hide-calorie-counter-button {
+    height: 1.5rem;
+    width: 50%;
+    border: none;
+    background-color: rgb(31, 31, 31);
+    color: rgb(255, 221, 0);
 }

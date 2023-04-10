@@ -1,11 +1,11 @@
-.tracking-body {
+/*.tracking-body {
     background-color: rgb(60, 60, 60);
     color: rgb(255, 221, 0);
     text-align: center;
     width: 100%;
     height: 100%;
     padding-bottom: 100%;
-}
+}*/
 
 .tracking-title {
     font-weight: bold;
@@ -14,13 +14,8 @@
     padding: 0.5rem
 }
 
+.exercise-weight-comment-input,
 .calendar {
-    background-color: rgb(31, 31, 31);
-    color: rgb(255, 221, 0);
-    width: 30%;
-}
-
-.exercise-weight-comment-input {
     color: rgb(255, 221, 0);
     background-color: rgb(31, 31, 31);
     text-align: center;
@@ -58,7 +53,7 @@
     margin-bottom: 2rem;
 }
 
-.exercise-submit-text-display {
+.submit-text-display {
     color: rgb(21, 255, 0);
     font-size: 13px;
 }

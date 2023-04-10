@@ -1,6 +1,6 @@
 import React, {useState, MouseEvent} from 'react';
 
-import ClassicButton from '../../Buttons/ClassicButton';
+import ImageButton from '../../Buttons/ImageButton';
 import DisplayMuscleGroupButton from '../../Buttons/DisplayMuscleGroupButton';
 import Exercises from './Exercises'
 
@@ -11,7 +11,7 @@ function ChooseMuscleGroup(){
         setButtonValue(!buttonValue);
     };
     
-    const [group, setGroup] = useState("");
+    const [group, setGroup] = useState("back");
     function ChangeGroup(e: MouseEvent<HTMLElement>){
         setGroup(e.currentTarget.id);
         console.log(e.currentTarget.id);
@@ -31,13 +31,30 @@ function ChooseMuscleGroup(){
     return(
         <div className="Dropdown">
             
-            <div className="Choose-muscle-group">
-                <ClassicButton
-                    className="Display-muscle-groups-button"
-                    text="Choose muscle group"
-                    type="button"
-                    onClick={ChangeButtonValue}/>
-            </div>
+            {buttonValue &&
+                <div className="Choose-muscle-group">
+                    <ImageButton
+                        className="Display-muscle-groups-button"
+                        text="Choose muscle group"
+                        id="arrowUp"
+                        type="button"
+                        altText="Choose muscle group arrow up"
+                        imageClass="button-icon"
+                        onClick={ChangeButtonValue}/>
+                </div>
+            }
+            {!buttonValue &&
+                <div className="Choose-muscle-group">
+                    <ImageButton
+                        className="Display-muscle-groups-button"
+                        text="Choose muscle group"
+                        id="arrowDown"
+                        type="button"
+                        altText="Choose muscle group arrow down"
+                        imageClass="button-icon"
+                        onClick={ChangeButtonValue}/>
+                </div>
+            }
 
                 {buttonValue &&
                     <div className="Dropdown-content">

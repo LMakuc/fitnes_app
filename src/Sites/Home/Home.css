@@ -4,6 +4,13 @@
     padding: 0.5rem;
 }
 
+.heading2 {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
 .calculators {
     display: flex;
     flex-direction: row;

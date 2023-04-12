@@ -8,6 +8,7 @@ import CalorieCounter from './Calories/CalorieCounter';
 import BMI from './Calculators/BMI';
 import BMR from './Calculators/BMR';
 import CC from './Calculators/CC';
+import DailyRecap from './DailyRecap';
 
 function Calculators(){
 
@@ -69,7 +70,7 @@ function Calculators(){
             <Quotes
                 className="animated-quote"
                 quote="'Don't let small minds convince you that your dreams are too big.'"/>
-            <div className="home-title">Daily recap</div>
+            <DailyRecap/>
             <Quotes
                 className="animated-quote"
                 quote="'Never forget where you came from'"/>

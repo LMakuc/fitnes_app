@@ -86,13 +86,12 @@
 }
 
 .choose-calculator-button {
-    /*background-color: rgb(31, 31, 31);*/
     background-color: rgb(41, 41, 41);
     color: rgb(255, 221, 0);
     height: 2.5rem;
     border: none;
-    /*text-align: left;*/
     font-size: 15px;
+    font-weight: bold;
     width: 33.33%;
 }
 
@@ -111,5 +110,15 @@
     font-weight: bold;
     font-size: 1.4rem;
     background-color: rgb(60, 60, 60);
+    border: none;
+}
+
+.choose-calorie-input-output-button {
+    width: 50%;
+    height: 3rem;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: rgb(41, 41, 41);
+    color: rgb(255, 221, 0);
     border: none;
 }

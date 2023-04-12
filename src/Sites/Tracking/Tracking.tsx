@@ -202,8 +202,7 @@ function Tracking(){
                                         id="calendar"
                                         type="date"
                                         value={date.toLocaleDateString("en-CA")}
-                                        onChange={getNewDate}
-                                        />
+                                        onChange={getNewDate}/>
                                 </div>
                                 <div className="wrong-input">
                                     {!dateBool && 

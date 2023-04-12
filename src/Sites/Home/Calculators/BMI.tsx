@@ -20,10 +20,26 @@ function BMI() {
         let value = weight / ((height/100)*(height/100));
         setBMIvalue(value);
     }
-    
+
+    const [showDescription, setShowDescription] = useState(false);
+    const description = (
+        <div className="text-background">
+            This is a measurement of a person’s leanness based on their height and weight. It is used as a general indicator of whether a person has healthy body weight for their height. 
+        </div>
+    );
+
     return(
         <div>
-            <div className="home-title">Body Mass Index Calculator</div>
+            <ClassicButton
+                className="show-hide-description-button"
+                text="Body Mass Index Calculator"
+                type="button"
+                id="BMIbutton"
+                onClick={() =>{setShowDescription(!showDescription)}}
+            />
+            {showDescription && 
+                description
+            }
             <div>
                 <Label
                     className="calculators-label"

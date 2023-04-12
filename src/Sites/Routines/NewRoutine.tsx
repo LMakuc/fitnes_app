@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 
+import './Routines.css';
+
 import Label from "../../Labels/Label";
 import TimedDisplay from "../Tracking/Form/TimedDisplay";
 import ClassicButton from "../../Buttons/ClassicButton";
@@ -89,7 +91,6 @@ function NewRoutine() {
 
     function submit(){
 
-        //console.log(validInput);
         setWasValid(validInput);
         setSubmitted(true);
         if(validInput){
@@ -103,7 +104,7 @@ function NewRoutine() {
             setSavedRoutines(newData);
             //console.log(newData);
             window.localStorage.setItem('savedRoutines', JSON.stringify(newData));
-            
+
             returnToDefault();
         }
     }
@@ -121,6 +122,7 @@ function NewRoutine() {
                 className="routines-label"
                 text="Routine Name:"/>
             <input
+                className="routine-input"
                 id="routineName"
                 type="text"
                 value={routineName}
@@ -132,6 +134,7 @@ function NewRoutine() {
                             className="routines-label"
                             text={`Muscle group ${muscleGroupIndex + 1}:`}/>
                     <input
+                        className="routine-input"
                         id={`muscleGroup-${muscleGroupIndex}`}
                         type="text"
                         value={muscleGroup}
@@ -143,22 +146,23 @@ function NewRoutine() {
                                 text={`Exercise ${exerciseIndex + 1}:`}/>
                             
                             <input
+                                className="routine-input"
                                 id={`exercise-${muscleGroupIndex}-${exerciseIndex}`}
                                 type="text"
                                 value={exercise.name}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, muscleGroupIndex, exerciseIndex)}/>
                         </div>
                     ))}
-                    <button type="button" onClick={() => handleAddExercise(muscleGroupIndex)}>
+                    <button className="routine-button" type="button" onClick={() => handleAddExercise(muscleGroupIndex)}>
                         Add Exercise
                     </button>
                 </div>
             ))}
 
-            <button type="button" onClick={handleAddMuscleGroup}>
+            <button className="routine-button" type="button" onClick={handleAddMuscleGroup}>
                 Add Muscle Group
             </button>
-            
+            <br/>
             <ClassicButton
                 className="routine-button"
                 text="Submit routine"

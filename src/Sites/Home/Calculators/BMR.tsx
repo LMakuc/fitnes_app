@@ -34,9 +34,25 @@ function BMR() {
         setBMRvalue(Number(value));
     }
 
+    const [showDescription, setShowDescription] = useState(false);
+    const description = (
+        <div className="text-background">
+             The value obtained from this calculator tells you, an estimated number of calories a person can consume in a day to maintain their body weight, assuming they remain at rest. It’s basically all the energy that your body need for keeping your heart beating, breathing, digesting food, making new blood cells, etc.
+        </div>
+    );
+
     return(
         <div>
-            <div className="home-title">Body Metabolic Rate Calculator</div>
+            <ClassicButton
+                className="show-hide-description-button"
+                text="Body Metabolic Rate Calculator"
+                type="button"
+                id="BMIbutton"
+                onClick={() =>{setShowDescription(!showDescription)}}
+            />
+            {showDescription &&
+                description
+            }
             <div>
                 <Label
                     className="calculators-label"
@@ -44,6 +60,12 @@ function BMR() {
             </div>
             <div>
                 <select 
+                    style={{
+                        backgroundColor: "rgb(31, 31, 31)",
+                        color: "rgb(255, 221, 0)",
+                        width: "50%",
+                        textAlign: "center"
+                    }}
                     value={gender}
                     onChange={e => setGender(e.target.value)}>
                         <option value="male">Male</option>

@@ -27,9 +27,25 @@ function CC() {
         setCCvalue(value);
     }
 
+    const [showDescription, setShowDescription] = useState(false);
+    const description = (
+        <div className="text-background">
+            This calculator tells you how much calories you would have to eat if you wanted to maintain, lose or gain a certain number of weight in a week.
+        </div>
+    );
+
     return(
         <div>
-            <div className="home-title">Calorie Caltulator Calculator</div>
+            <ClassicButton
+                className="show-hide-description-button"
+                text="Calorie Calculator"
+                type="button"
+                id="BMIbutton"
+                onClick={() =>{setShowDescription(!showDescription)}}
+            />
+            {showDescription &&
+                description
+            }
 
             <div>
                 <Label
@@ -51,13 +67,14 @@ function CC() {
             </div>
             <div>
                 <select
+                    className="calculators-select"
                     value={activityLevel}
                     onChange={e => setActivityLevel(e.target.value)}>
                         <option value="1.2">Sedentary (little or no exercise, desk job)</option>
                         <option value="1.375">Lightly active (light exercise/sports 1 - 3 days/week)</option>
-                        <option value="1.55">Moderately active (moderate exercise/sports 6-7 days/week)</option>
-                        <option value="1.725">Very active (hard exercise every day or exercising 2x/day)</option>
-                        <option value="1.9">Extra active (hard exercise 2 or more times per day, training for marathon, triathlon, etc.)</option>
+                        <option value="1.55">Moderately active (exercise/sports 6-7 days/week)</option>
+                        <option value="1.725">Very active (hard exercise every day)</option>
+                        <option value="1.9">Extra active (hard exercise 2 or more times per day)</option>
                 </select>
             </div>
             <div>
@@ -67,6 +84,7 @@ function CC() {
             </div>
             <div>
                 <select
+                    className="calculators-select"
                     value={gainLossPercent}
                     onChange={e => setGainLossPercent(parseFloat(e.target.value))}>
                         <option value="0.63">Extreme weight loss (-1kg/week)</option>
@@ -82,7 +100,7 @@ function CC() {
             <div>
                 <ClassicButton
                     className="submit-for-calculator-button"
-                    text="Calculate BMR"
+                    text="Calculate calories"
                     type="button"
                     onClick={calculateCC}/>
             </div>

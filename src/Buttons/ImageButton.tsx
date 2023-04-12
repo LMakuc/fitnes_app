@@ -8,7 +8,7 @@ import tracking_icon from '../Assets/Icons/icon_tracking.png';
 import routines_icon from '../Assets/Icons/icon_routines.png';
 import arrowUp from '../Assets/arrow_up2.png';
 import arrowDown from '../Assets/arrow_down2.png';
-import plus from '../Assets/plus.png';
+import plus from '../Assets/plus2.png';
 
 type Props = {
     className: string;

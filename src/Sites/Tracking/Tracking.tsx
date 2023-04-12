@@ -28,7 +28,6 @@ function Tracking(){
     const [date, setDate] = useState(new Date());
     function getNewDate(e: ChangeEvent<HTMLInputElement>){
         setDate(new Date(e.target.value));
-        
     }
     const [dateBool, setDateBool] = useState(true);
     useEffect(()=>

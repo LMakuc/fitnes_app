@@ -11,6 +11,7 @@
 
 .text-background {
     background-color: rgb(60, 60, 60);
+    text-align: justify;
 }
 
 .bottom-navigation {

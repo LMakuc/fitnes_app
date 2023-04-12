@@ -57,3 +57,16 @@
     color: rgb(21, 255, 0);
     font-size: 13px;
 }
+
+table {
+    margin-bottom: 2rem;
+    border-collapse: collapse;
+    background: rgb(60, 60, 60);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td,
+th {
+    border: 1px solid rgb(255, 221, 0);
+}

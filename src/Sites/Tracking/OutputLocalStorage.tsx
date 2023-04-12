@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, useEffect} from 'react';
+import React, {useState, ChangeEvent, useEffect, useCallback} from 'react';
 
 import './Tracking.css';
 
@@ -45,104 +45,84 @@ function OutputLocalStorage({savedExercises}:Props){
         window.localStorage.setItem('savedExercises', JSON.stringify(exercises));
     },[exercises])
     
-    function deleteExercise(i: number) {
-        console.log(exercises);
-        
-        //deleting element of a table
-        setExercises((prevState) =>
-            prevState.filter((prevItem, index) => index !== i)
-        );
-    }
-    
-    
-    function getExerciseNames(){
-        const dateFilteredExercises = exercises.filter((exercise) => 
+    const getExerciseNames = useCallback(() => {
+        const dateFilteredExercises = exercises.filter((exercise) =>
             new Date(exercise.date).getDay() === inputDate.getDay() &&
             new Date(exercise.date).getMonth() === inputDate.getMonth() &&
-            new Date(exercise.date).getFullYear() === inputDate.getFullYear());
-        console.log(dateFilteredExercises);
-
+            new Date(exercise.date).getFullYear() === inputDate.getFullYear()
+        );
+        //console.log(dateFilteredExercises);
+    
         const exerciseNames: string[] = [];
-        dateFilteredExercises.forEach((exercise) =>{ 
-            console.log(exercise);
-            if(!(exerciseNames.includes(exercise.exercise))){
+        dateFilteredExercises.forEach((exercise) => {
+            if (!exerciseNames.includes(exercise.exercise)) {
                 exerciseNames.push(exercise.exercise);
             }
-            return <div></div>;
         });
-
+    
         return exerciseNames;
-    }
+    }, [exercises, inputDate]);
 
-    const exerciseNames = getExerciseNames();
-    console.log(exerciseNames);
 
-    const exerciseNames2 = [...new Set(exercises.map(exercise => exercise.exercise))];
+    const deleteExerciseTable = useCallback((name: string) => {
+        const updatedExercises = exercises.filter((exercise) => exercise.exercise !== name);
+        window.localStorage.setItem('savedExercises',JSON.stringify(updatedExercises));
+        setExercises(updatedExercises);
+        setExerciseNames(getExerciseNames());
+    }, [exercises, getExerciseNames]);
+    
+    const [exerciseNames, setExerciseNames] = useState<string[]>([]);
+    useEffect(() => {
+        const exerciseNames = getExerciseNames();
+        //console.log(exerciseNames);
+        setExerciseNames(exerciseNames);
+    }, [exercises, inputDate])
 
-    const outputTables = exerciseNames2.map((name) => (
-            <table style={{ marginBottom: '2rem' }}>
-                <thead>
-                    <tr>
-                        <th colSpan={4}>{name}</th>
-                    </tr>
-                    <tr>
-                        <th>Weight</th>
-                        <th>Rep</th>
-                        <th>Set</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {exercises
-                        .filter((outputExercise) => 
-                            new Date(outputExercise.date).getDay() === inputDate.getDay() &&
-                            new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
-                            new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
-                            outputExercise.exercise === name)
-                        .map((outputExercise) => (
-                            <tr>
-                                <td>{outputExercise.weight}</td>
-                                <td>{outputExercise.rep}</td>
-                                <td>{outputExercise.set}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+    const outputTables = exerciseNames.map((name) => (
+            <div>
+                <ClassicButton
+                    className="delete-exercise-table-button"
+                    text="Delete exercise"
+                    type="button"
+                    id="deleteExerciseTable"
+                    onClick={() => deleteExerciseTable(name)}/>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colSpan={4}>{name}</th>
+                        </tr>
+                        <tr>
+                            <th>Set</th>
+                            <th>Rep/duration</th>
+                            <th>Weight</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {exercises
+                            .filter((outputExercise) => 
+                                new Date(outputExercise.date).getDay() === inputDate.getDay() &&
+                                new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
+                                new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
+                                outputExercise.exercise === name)
+                            .map((outputExercise, i) => (
+                                <tr>
+                                    <td>{outputExercise.set}</td>
+                                    <td>{outputExercise.rep}</td>
+                                    <td>{outputExercise.weight}</td>
+                                    <td>{outputExercise.comment}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
     ));
-
-      
-      
-
-    const outputData = exercises.map((outputExercise, i)=>
-        <div key={i}>
-            {new Date(outputExercise.date).getDay() === inputDate.getDay() &&
-            new Date(outputExercise.date).getMonth() === inputDate.getMonth() &&
-            new Date(outputExercise.date).getFullYear() === inputDate.getFullYear() &&
-                <div className="output-exercise">
-                    <div>Date: {new Date(outputExercise.date).toLocaleDateString()}</div>
-                    <div>Exercise: {outputExercise.exercise} </div>
-                    <div>Set: {outputExercise.set}</div>
-                    <div>Rep: {outputExercise.rep}</div>
-                    {outputExercise.weight !=="0kg" && outputExercise.weight !=="0" &&
-                        <div>Weight: {outputExercise.weight}</div>
-                    }
-                    {outputExercise.comment!=="/" && 
-                        <div>Comment: {outputExercise.comment}</div>
-                    }
-                    <ClassicButton
-                        className="delete-one-exercise-button"
-                        text="Delete"
-                        onClick={()=>{
-                            deleteExercise(i);
-                        }}/>
-                </div>
-            }
-        </div>
-    )
         
     function deleteAllExercises(){
-        localStorage.removeItem('savedExercies');
+        localStorage.removeItem('savedExercises');
         setExercises([]);
+        setExerciseNames([]);
     }
 
     return(
@@ -179,9 +159,6 @@ function OutputLocalStorage({savedExercises}:Props){
                     }
                 </div>
             </div>
-            {false && 
-                outputData
-            }
             {true && 
                 outputTables
             }

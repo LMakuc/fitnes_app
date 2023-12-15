@@ -11,7 +11,7 @@ function CC() {
         setBMR(Number(e.target.value));
     }
 
-    const [activityLevel, setActivityLevel] = useState("");
+    const [activityLevel, setActivityLevel] = useState("1.2");
 
     const [gainLossPercent, setGainLossPercent] = useState(0);
 
@@ -55,7 +55,7 @@ function CC() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={BMR}
                     name="BMR"
                     onChange={inputBMR}/>

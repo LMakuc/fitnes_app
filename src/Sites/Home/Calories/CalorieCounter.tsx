@@ -16,7 +16,7 @@ function CalorieCounter (){
         <div>
             <ClassicButton
                 className="choose-calorie-input-output-button"
-                text="Calorie input"
+                text="Food input"
                 type="button"
                 id="calorieInput"
                 onClick={()=>{
@@ -25,7 +25,7 @@ function CalorieCounter (){
                 }}/>
             <ClassicButton
                 className="choose-calorie-input-output-button"
-                text="Calorie output"
+                text="Food output"
                 type="button"
                 id="calorieInput"
                 onClick={() =>{
@@ -38,7 +38,6 @@ function CalorieCounter (){
             {outputBool &&
                 <CalorieOutput/>
             }
-
         </div>
     );
 }

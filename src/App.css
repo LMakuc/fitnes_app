@@ -1,4 +1,4 @@
-.App-body {
+body {
     background-color: rgb(60, 60, 60);
     color: rgb(255, 221, 0);
     text-align: center;
@@ -7,11 +7,17 @@
     background-image: url(./Assets/Background/background_pattern_weight3.png);
     background-repeat: repeat;
     background-size: 5rem;
+    margin: 0;
+}
+
+.App-body {
+    padding-bottom: 1px;
 }
 
 .text-background {
     background-color: rgb(60, 60, 60);
     text-align: justify;
+    padding: 0 10px;
 }
 
 .bottom-navigation {
@@ -22,6 +28,7 @@
     left: 0;
     width: 100%;
     height: 10%;
+    z-index: 100;
 }
 
 .Change-site-button {
@@ -29,9 +36,7 @@
     color: rgb(255, 221, 0);
     font-size: 1rem;
     width: 33.3333%;
-    height: 4.5rem;
     outline: none;
-    position: relative;
     border: none;
 }
 

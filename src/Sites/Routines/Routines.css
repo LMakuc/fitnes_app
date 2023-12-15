@@ -1,9 +1,23 @@
+.routine-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15%;
+}
+
 .routine-input {
     color: rgb(255, 221, 0);
     background-color: rgb(31, 31, 31);
     text-align: center;
     width: 50%;
     margin-left: 0.5rem;
+    flex: 1;
+    text-align: left;
+}
+
+.routines-label {
+    flex: 1;
+    text-align: right;
 }
 
 .routine-button {
@@ -11,7 +25,8 @@
     background-color: rgb(31, 31, 31);
     border: none;
     height: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .delete-routine-button {

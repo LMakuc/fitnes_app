@@ -6,14 +6,16 @@ import Label from "../../Labels/Label";
 import TimedDisplay from "../Tracking/Form/TimedDisplay";
 import ClassicButton from "../../Buttons/ClassicButton";
 
-
+interface Props{
+    toggleAddRoutineField: () => void;
+}
 type routines={
     routineName: string;
     muscleGroups: Array<string>;
     exercises: Array<Array<{name: string}>>;
 }
 
-function NewRoutine() {
+function NewRoutine({toggleAddRoutineField}:Props) {
     const [routineName, setRoutineName] = useState("");
     const [muscleGroups, setMuscleGroups] = useState<string[]>([]);
     const [exercises, setExercises] = useState<Array<Array<{name: string}>>>([]);
@@ -106,6 +108,7 @@ function NewRoutine() {
             window.localStorage.setItem('savedRoutines', JSON.stringify(newData));
 
             returnToDefault();
+            toggleAddRoutineField();
         }
     }
 
@@ -130,27 +133,31 @@ function NewRoutine() {
 
             {muscleGroups.map((muscleGroup, muscleGroupIndex) => (
                 <div key={`muscleGroup-${muscleGroupIndex}`}>
+                    <div className="routine-input-container">
                         <Label
                             className="routines-label"
                             text={`Muscle group ${muscleGroupIndex + 1}:`}/>
-                    <input
-                        className="routine-input"
-                        id={`muscleGroup-${muscleGroupIndex}`}
-                        type="text"
-                        value={muscleGroup}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, muscleGroupIndex)}/>
+                        <input
+                            className="routine-input"
+                            id={`muscleGroup-${muscleGroupIndex}`}
+                            type="text"
+                            value={muscleGroup}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, muscleGroupIndex)}/>
+                        </div>
                     {exercises[muscleGroupIndex]?.map((exercise, exerciseIndex) => (
                         <div key={`exercise-${muscleGroupIndex}-${exerciseIndex}`}>
-                            <Label
-                                className="routines-label"
-                                text={`Exercise ${exerciseIndex + 1}:`}/>
-                            
-                            <input
-                                className="routine-input"
-                                id={`exercise-${muscleGroupIndex}-${exerciseIndex}`}
-                                type="text"
-                                value={exercise.name}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, muscleGroupIndex, exerciseIndex)}/>
+                            <div className="routine-input-container">
+                                <Label
+                                    className="routines-label"
+                                    text={`Exercise ${exerciseIndex + 1}:`}/>
+                                
+                                <input
+                                    className="routine-input"
+                                    id={`exercise-${muscleGroupIndex}-${exerciseIndex}`}
+                                    type="text"
+                                    value={exercise.name}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleInputChange(e, muscleGroupIndex, exerciseIndex)}/>
+                            </div>
                         </div>
                     ))}
                     <button className="routine-button" type="button" onClick={() => handleAddExercise(muscleGroupIndex)}>
@@ -180,11 +187,11 @@ function NewRoutine() {
             }
             {submitted && wasValid && 
                 <TimedDisplay
-                className="timed-display"
-                text="Your input is correct"
-                time={3000}
-                show={submitted}
-                setShow={setSubmitted}/>
+                    className="timed-display"
+                    text="Your input is correct"
+                    time={3000}
+                    show={submitted}
+                    setShow={setSubmitted}/>
             }
         </div>
     );

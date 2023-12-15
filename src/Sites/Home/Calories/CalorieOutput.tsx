@@ -37,8 +37,23 @@ function CalorieOutput(){
         new Date(outputFoods.date).getMonth() === new Date(date).getMonth() &&
         new Date(outputFoods.date).getFullYear() === new Date(date).getFullYear());
 
-    
-
+        useEffect(() => {
+            calculateSumCaloriesAndProtein();
+        }, [outputFoods]);
+        
+        const [sumCalories, setSumCalories] = useState(0);
+        const [sumProtein, setSumProtein] = useState(0);
+        function calculateSumCaloriesAndProtein(){
+            let sumCalories = 0;
+            let sumProtein = 0;
+            // eslint-disable-next-line array-callback-return
+            outputFoods.map((food) => {
+                sumCalories += food.calories;
+                sumProtein += food.protein;
+            })
+            setSumCalories(sumCalories);
+            setSumProtein(sumProtein);
+        }
 
     const outputTable = (
         <table>
@@ -66,6 +81,8 @@ function CalorieOutput(){
             {outputFoods.length > 0 && 
                 <div>
                     {outputTable}
+                    <div>Total calories: {sumCalories}</div>
+                    <div>Total protein: {sumProtein}</div>
                 </div>
             }
             {outputFoods.length === 0 && 
@@ -86,7 +103,7 @@ function CalorieOutput(){
     
     return(
         <div>
-            <div className="heading2">Calorie output</div>
+            <div className="heading2">Food output</div>
                 <div>
                     <DisplayCalendar
                         className="calorie-counter-input"
@@ -109,7 +126,6 @@ function CalorieOutput(){
                 {true &&
                     output
                 }
-            <br/><br/><br/><br/>
         </div>
     );
 }

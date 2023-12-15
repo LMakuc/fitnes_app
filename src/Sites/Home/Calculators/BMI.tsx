@@ -48,11 +48,10 @@ function BMI() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={height}
                     name="heigth"
-                    onChange={inputHeight}
-                    />
+                    onChange={inputHeight}/>
             </div>
             <div>
                 <Label
@@ -62,7 +61,7 @@ function BMI() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={weight}
                     name="weight"
                     onChange={inputWeight}/>

@@ -24,7 +24,7 @@ function Routines(){
 
     useEffect(() => {
         const stringData = window.localStorage.getItem('savedRoutines');
-        setStoredData(stringData);  
+        setStoredData(stringData);
     }, [refresh, addRoutineField]);
 
     useEffect(() => {
@@ -41,6 +41,10 @@ function Routines(){
         window.localStorage.setItem('savedRoutines', JSON.stringify(newRoutines))
     }
 
+    const toggleAddRoutineField = () =>{
+        setAddRoutineField(prevState => !prevState);
+    }
+
     return(
         <div>
             <ImageButton
@@ -51,12 +55,14 @@ function Routines(){
                 altText="Add routine plus"
                 imageClass="buttonIcon"
                 onClick={() => {
-                    setAddRoutineField(!addRoutineField);
+                    //setAddRoutineField(!addRoutineField);
+                    toggleAddRoutineField();
                     setRefresh(!refresh);
                     }}/>
 
             {addRoutineField && 
-                <NewRoutine/>
+                <NewRoutine
+                    toggleAddRoutineField={toggleAddRoutineField}/>
             }
             <br/>
 

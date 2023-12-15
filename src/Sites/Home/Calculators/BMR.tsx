@@ -80,7 +80,7 @@ function BMR() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={age}
                     name="age"
                     onChange={inputAge}/>
@@ -93,7 +93,7 @@ function BMR() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={height}
                     name="heigth"
                     onChange={inputHeight}
@@ -107,7 +107,7 @@ function BMR() {
             <div>
                 <CalculatorsInput
                     className="calculators-input"
-                    type="string"
+                    type="number"
                     value={weight}
                     name="weight"
                     onChange={inputWeight}

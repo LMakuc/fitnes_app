@@ -108,7 +108,7 @@ function CalorieInput(){
 
     return(
         <div>
-            <div className="heading2">Calorie input</div>
+            <div className="heading2">Food input</div>
             <Label
                 className="calorie-counter-label"
                 text="Input date:"/>

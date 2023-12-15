@@ -162,6 +162,7 @@ function OutputLocalStorage({savedExercises}:Props){
             {true && 
                 outputTables
             }
+            <br/><br/><br/><br/>
         </div>
     );
 }

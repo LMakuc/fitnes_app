@@ -4,6 +4,7 @@ import './Home.css';
 
 import ClassicButton from '../../Buttons/ClassicButton';
 import Quotes from './Quotes/Quotes';
+import Dumbbell from '../../Images/SpinningDumbBell';
 import CalorieCounter from './Calories/CalorieCounter';
 import BMI from './Calculators/BMI';
 import BMR from './Calculators/BMR';
@@ -56,7 +57,7 @@ function Calculators(){
                     type="button"
                     onClick={openCC}/>
             </div>
-            <div>
+            <div style={{marginBottom: "2rem"}}>
                 {buttonStateBMI &&
                     <BMI/>
                 }
@@ -67,19 +68,9 @@ function Calculators(){
                     <CC/>
                 }
             </div>
-            <Quotes
-                className="animated-quote"
-                quote="'Don't let small minds convince you that your dreams are too big.'"/>
-            <DailyRecap/>
-            <Quotes
-                className="animated-quote"
-                quote="'Never forget where you came from'"/>
-            <div className="home-title">Calorie counter</div>
+            
             <CalorieCounter/>
-            <Quotes
-                className="animated-quote"
-                quote="'You will never reach perfect. So die trying'"/>
-            <div className="home-title">Body Measurment Tracker</div>
+            <br/><br/><br/><br/>
         </div>
     );
 }

@@ -48,44 +48,42 @@ function App() {
   }
 
   return (
-    <div>
-      <div className="App-header">
-        <div className="bottom-navigation">
-          <ImageButton
-            className="Change-site-button"
-            text="Home"
-            id="home"
-            type="button"
-            altText="Home button icon"
-            imageClass="button-icon"
-            onClick={changeSiteToHome}/>
-          <ImageButton
-            className="Change-site-button"
-            text="Exercises"
-            id="exercises"
-            type="button"
-            altText="Exercises button icon"
-            imageClass="button-icon"
-            onClick={changeSiteToTracking}/>
-          <ImageButton
-            className="Change-site-button"
-            text="Routines"
-            id="routines"
-            type="button"
-            altText="Routines button icon"
-            imageClass="button-icon"
-            onClick={changeSiteToRoutines}/>
-          <ImageButton
-            className="Change-site-button"
-            text="Tracking"
-            id="tracking"
-            type="button"
-            altText="Tracking button icon"
-            imageClass="button-icon"
-            onClick={changeSiteToExercises}/>
-        </div>
+    <div className="App-body">
+      <div className="bottom-navigation">
+        <ImageButton
+          className="Change-site-button"
+          text="Home"
+          id="home"
+          type="button"
+          altText="Home button icon"
+          imageClass="button-icon"
+          onClick={changeSiteToHome}/>
+        <ImageButton
+          className="Change-site-button"
+          text="Exercises"
+          id="exercises"
+          type="button"
+          altText="Exercises button icon"
+          imageClass="button-icon"
+          onClick={changeSiteToTracking}/>
+        <ImageButton
+          className="Change-site-button"
+          text="Routines"
+          id="routines"
+          type="button"
+          altText="Routines button icon"
+          imageClass="button-icon"
+          onClick={changeSiteToRoutines}/>
+        <ImageButton
+          className="Change-site-button"
+          text="Tracking"
+          id="tracking"
+          type="button"
+          altText="Tracking button icon"
+          imageClass="button-icon"
+          onClick={changeSiteToExercises}/>
       </div>
-      <div className="App-body">
+      <div>
         {buttonStateTracking && 
           <ChooseMuscleGroup/>
         }
